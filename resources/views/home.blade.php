@@ -15,6 +15,14 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+                        <x-alert/>
+                        <form action="/upload" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="image">
+                            <button type="submit">Submit</button>
+                        </form>
+
                 </div>
             </div>
         </div>
