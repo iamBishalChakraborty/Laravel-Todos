@@ -36,15 +36,12 @@
                                             @method('put')
                                         </form>
                                         @endif
-
-
-
                                     <div class="float-right">
                                         <a href="{{route('todo.edit',$todo->id)}}" style="color: orange"><i class="fad fa-pencil"></i></a>
-                                        <a onclick="event.preventDefault(); if (confirm('Are you Sure You want to delete : {{$todo->title}} ?')){ document.getElementById('form-delete-{{$todo->id}}').submit(); } " class="ml-3" href="{{route('todo.delete',$todo->id)}}" style="color: red"><i class="fad fa-trash"></i></a>
-                                        <form action="{{route('todo.delete', $todo->id)}}" id="form-delete-{{$todo->id}}" method="post" hidden>
+                                        <a onclick="event.preventDefault(); if (confirm('Are you Sure You want to delete : {{$todo->title}} ?')){ document.getElementById('form-delete-{{$todo->id}}').submit(); }" class="ml-3" style="color: red"><i class="fad fa-trash"></i></a>
+                                        <form action="{{route('todo.destroy', $todo->id)}}" id="form-delete-{{$todo->id}}" method="post" hidden>
                                             @csrf
-                                            @method('put')
+                                            @method('DELETE')
                                         </form>
                                     </div>
 

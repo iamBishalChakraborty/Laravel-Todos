@@ -24,15 +24,12 @@ Route::post('/upload', 'UserController@upload');
 
 Auth::routes();
 
-
-Route::get('/todos', 'TodoController@index')->name('todo.index');
-Route::get('/todos/create', 'TodoController@create')->name('todo.create');
-Route::get('/todos/{todo}/edit', 'TodoController@edit')->name('todo.edit');
-Route::patch('/todos/{todo}/edit', 'TodoController@update')->name('todo.update');
-Route::post('/todos/create', 'TodoController@store')->name('todo.store');
+Route::resource('todo', 'TodoController');
 Route::put('/todos/{todo}/complete', 'TodoController@complete')->name('todo.complete');
 Route::put('/todos/{todo}/incomplete', 'TodoController@incomplete')->name('todo.incomplete');
-Route::put('/todos/{todo}/delete', 'TodoController@delete')->name('todo.delete');
 
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

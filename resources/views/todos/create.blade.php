@@ -7,14 +7,14 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <a href="/todos" style="color: orange"><i class="fad fa-arrow-to-left fa-2x"></i></a>
+                            <a href="{{route('todo.index')}}" style="color: orange"><i class="fad fa-arrow-to-left fa-2x"></i></a>
                         </div>
                      </div>
 
                     <div class="card-body text-center">
                         <h5 class="mb-3">What next you Need TODO ?</h5>
                         <x-alert/>
-                        <form action="/todos/create" method="post">
+                        <form action="{{route('todo.store')}}" method="post">
                             @csrf
                             <input type="text" name="title">
                             <button type="submit">Submit</button>

@@ -8,11 +8,14 @@ use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
-    //
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
 
     public function index()
     {
-        $todos = Todo::orderby('completed')->get();
+        $todos = auth()->user()->todos->sortBy('completed');
         return view('todos.index', compact('todos'));
     }
 
@@ -21,29 +24,18 @@ class TodoController extends Controller
         return view('todos.create');
     }
 
+    public function store(TodoCreateRequest $request)
+    {
+
+
+        auth()->user()->todos()->create($request->all());
+        return redirect(route('todo.index'))->with('success', 'Todo Added Successfully');
+    }
+
     public function edit(Todo $todo)
     {
 
         return view('todos.edit', compact('todo'));
-
-    }
-
-    public function complete(Todo $todo)
-    {
-        $todo->update(['completed' =>true]);
-        return redirect(route('todo.index'))->with('success','Todo Marked as Completed');
-    }
-
-    public function delete(Todo $todo)
-    {
-        $todo->delete();
-        return redirect(route('todo.index'))->with('success','Todo Deleted Successfully');
-    }
-
-    public function incomplete(Todo $todo)
-    {
-        $todo->update(['completed' =>false]);
-        return redirect(route('todo.index'))->with('success','Todo Marked as Incomplete');
     }
 
     public function update(TodoCreateRequest $request, Todo $todo)
@@ -53,14 +45,24 @@ class TodoController extends Controller
         return redirect(route('todo.index'))->with('success','Todo Updated successfully');
     }
 
-
-
-    public function store(TodoCreateRequest $request)
+    public function destroy(Todo $todo)
     {
-
-        Todo::create($request->all());
-        return redirect(route('todo.index'))->with('success', 'Todo Added Successfully');
+        $todo->delete();
+        return redirect(route('todo.index'))->with('success','Todo Deleted Successfully');
     }
 
+
+
+    public function complete(Todo $todo)
+    {
+        $todo->update(['completed' =>true]);
+        return redirect(route('todo.index'))->with('success','Todo Marked as Completed');
+    }
+
+    public function incomplete(Todo $todo)
+    {
+        $todo->update(['completed' =>false]);
+        return redirect(route('todo.index'))->with('success','Todo Marked as Incomplete');
+    }
 
 }

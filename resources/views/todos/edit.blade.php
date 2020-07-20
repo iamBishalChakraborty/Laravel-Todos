@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <a href="/todos" style="color: orange"><i class="fad fa-arrow-to-left fa-2x"></i></a>
+                            <a href="{{route('todo.index')}}" style="color: orange"><i class="fad fa-arrow-to-left fa-2x"></i></a>
                         </div>
                     </div>
 
