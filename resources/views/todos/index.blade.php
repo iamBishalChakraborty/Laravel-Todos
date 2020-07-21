@@ -23,14 +23,14 @@
 
                                         @if ($todo->completed)
                                         <a onclick="event.preventDefault();document.getElementById('form-incomplete-{{$todo->id}}').submit();" style="color: limegreen"><i class="fad fa-check"></i></a>
-                                        <del>{{$todo->title}}</del>
+                                        <del><a class="text-decoration-none" href="{{route('todo.show', $todo->id)}}"><h5>{{$todo->title}}</h5></a></del>
                                         <form action="{{route('todo.incomplete', $todo->id)}}" id="form-incomplete-{{$todo->id}}" method="post" hidden>
                                             @csrf
                                             @method('put')
                                         </form>
                                         @else
                                         <a  onclick="event.preventDefault();document.getElementById('form-complete-{{$todo->id}}').submit();" style="color: black"><i class="fad fa-check"></i></a>
-                                        {{$todo->title}}
+                                        <a class="text-decoration-none" href="{{route('todo.show', $todo->id)}}"><h5>{{$todo->title}}</h5></a>
                                         <form action="{{route('todo.complete', $todo->id)}}" id="form-complete-{{$todo->id}}" method="post" hidden>
                                             @csrf
                                             @method('put')

@@ -17,8 +17,18 @@
                         <form action="{{route('todo.update', $todo->id)}}" method="post">
                             @csrf
                             @method('patch')
-                            <input type="text" name="title" value="{{$todo->title}}">
-                            <button type="submit">Update</button>
+                            <div class="form-group">
+                                <label for="todoText">Todo</label>
+                                <input type="text" name="title" class="form-control" id="todoText" value="{{$todo->title}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="todoDescription">Todo Description</label>
+                                <textarea class="form-control" name="description" id="todoDescription" rows="3">{{$todo->description}}</textarea>
+                            </div>
+                            @livewire('edit-step', ['steps' => $todo->steps])
+                            <div class="text-center mt-3">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>

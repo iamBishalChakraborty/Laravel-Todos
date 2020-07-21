@@ -11,13 +11,25 @@
                         </div>
                      </div>
 
-                    <div class="card-body text-center">
+
+                    <div class="card-body px-5 mx-5">
                         <h5 class="mb-3">What next you Need TODO ?</h5>
                         <x-alert/>
-                        <form action="{{route('todo.store')}}" method="post">
+                        <form action="{{route('todo.store')}}" method="post" >
                             @csrf
-                            <input type="text" name="title">
-                            <button type="submit">Submit</button>
+                            <div class="form-group">
+                                <label for="todoText">Todo</label>
+                                <input type="text" name="title" class="form-control" id="todoText">
+                            </div>
+                            <div class="form-group">
+                                <label for="todoDescription">Todo Description</label>
+                                <textarea class="form-control" name="description" id="todoDescription" rows="3"></textarea>
+                            </div>
+                            @livewire('step')
+
+                            <div class="text-center mt-3">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>

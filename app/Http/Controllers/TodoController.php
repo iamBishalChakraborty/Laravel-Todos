@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoCreateRequest;
+use App\Step;
 use App\Todo;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,17 @@ class TodoController extends Controller
 
     public function store(TodoCreateRequest $request)
     {
+        $todo = auth()->user()->todos()->create($request->all());
+
+        if ($request->steps){
+            foreach ($request->steps as $step){
+
+                $todo->steps()->create(['steps' => $step]);
+
+            }
+        }
 
 
-        auth()->user()->todos()->create($request->all());
         return redirect(route('todo.index'))->with('success', 'Todo Added Successfully');
     }
 
@@ -41,16 +50,34 @@ class TodoController extends Controller
     public function update(TodoCreateRequest $request, Todo $todo)
     {
 
-        $todo->update(['title' => $request->title]);
+       $todo->update(['title' => $request->title, 'description' => $request->description]);
+        if ($request->stepsName){
+            foreach ($request->stepsName as $key => $value){
+                $id = $request->stepsID[$key];
+                if (!$id){
+                    $todo->steps()->create(['steps' => $value]);
+                }else{
+                    Step::find($id)->update(['steps' => $value]);
+                }
+
+
+            }
+        }
         return redirect(route('todo.index'))->with('success','Todo Updated successfully');
     }
 
     public function destroy(Todo $todo)
     {
+        $todo->steps()->delete();
         $todo->delete();
         return redirect(route('todo.index'))->with('success','Todo Deleted Successfully');
     }
 
+    public function show(Todo $todo)
+    {
+        $steps = $todo->steps->all();
+        return view('todos.view', compact('todo', 'steps'));
+    }
 
 
     public function complete(Todo $todo)
